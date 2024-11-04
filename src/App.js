@@ -1,23 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import UseData from "./hooks/useData";
+import Post from "./card";
+import Navbar from "./navbar";
+import Sidebar from "./sidebar";
 
 function App() {
+  const { data, setSubreddit, error, setError } = UseData();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div className="layout">
+      <header className="header">
+        <Navbar setSubreddit={setSubreddit} error={error} setError={setError}/>
       </header>
+
+      <main  className="main-content">
+        <div className="post-container">
+          {error ? <p>Subreddit not found!</p> : <Post data={data}/>}
+        </div>
+
+         <aside className="sidebar-container">
+          <Sidebar setSubreddit={setSubreddit} error={error} setError={setError} />
+        </aside>
+      </main>
     </div>
   );
 }
